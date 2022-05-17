@@ -4,7 +4,7 @@ set -e
 TEMP_FILEPATH="000-default.conf"
 
 create_tmp_file() {
-    remotes="$1"
+    upstreams="$1"
     cat <<-EOF > $TEMP_FILEPATH
 <VirtualHost *:80>
 
@@ -29,9 +29,10 @@ EOF
 
 EOF
 
-    LINES=$(echo $remotes | awk -F';' '{print $1.$2}')
+    LINES=$(echo $upstreams | awk -F';' '{print $1.$2}')
 
-    if [ -n "$remotes" ]; then
+    if [ -n "$upstreams" ]; then
+        echo "Upstream configuration"
         cat <<-EOF >> $TEMP_FILEPATH
     ProxyRequests Off
     ProxyPreserveHost On
@@ -39,7 +40,7 @@ EOF
 EOF
     fi
 
-    for line in $remotes; do
+    for line in $upstreams; do
         trimmed=$(echo $line | awk -F';' '{print $1, $2}' | awk '{$1=$1};1')
         if [ -n "$trimmed" ] ; then
             cat <<-EOF >> $TEMP_FILEPATH
@@ -47,6 +48,7 @@ EOF
     ProxyPassReverse ${trimmed}
 
 EOF
+        echo "Upstream: ${trimmed}"
         fi
     done
 
@@ -78,7 +80,7 @@ apply_config() {
     fi
 }
 
-create_tmp_file "$REMOTES"
+create_tmp_file "$UPSTREAMS"
 apply_config
 
 echo "Base configuration done."

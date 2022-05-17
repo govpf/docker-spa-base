@@ -13,7 +13,7 @@ jobs:
 #      matrix:
 #        versions: [6]
     env:
-      repo: "govpf/hello" # Please don't forget to create the repo on Docker Hub
+      repo: "govpf/spa-base" # Please don't forget to create the repo on Docker Hub
     steps:
 
     - name: Checkout
@@ -31,7 +31,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2.10.0
       with:
-        context: .
+        context: ./apache
 #        context: ./${{ matrix.versions }}
         file: ./Dockerfile
 #        file: ./${{ matrix.versions }}/Dockerfile
@@ -39,7 +39,7 @@ jobs:
         pull: true
         push: true
         tags: |
-          ${{ env.repo }}:latest
+          ${{ env.repo }}:apache
 #          ${{ env.repo }}:${{ matrix.versions }}
 
     - name: Update repo description
