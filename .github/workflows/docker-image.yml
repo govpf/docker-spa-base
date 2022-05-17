@@ -33,7 +33,7 @@ jobs:
       with:
         context: ./apache
 #        context: ./${{ matrix.versions }}
-        file: ./Dockerfile
+        file: ./apache/Dockerfile
 #        file: ./${{ matrix.versions }}/Dockerfile
         platforms: linux/amd64
         pull: true
