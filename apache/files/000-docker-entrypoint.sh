@@ -36,12 +36,11 @@ EOF
         cat <<-EOF >> $TEMP_FILEPATH
 
     SSLProxyEngine On
-    SSLProxyVerify none
-    SSLProxyCheckPeerName off
+    SSLProxyCheckPeerName on
     SSLProxyCheckPeerExpire on
 
     ProxyRequests Off
-    ProxyPreserveHost On
+    ProxyPreserveHost off
 
 EOF
     fi
