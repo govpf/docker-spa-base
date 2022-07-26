@@ -6,7 +6,7 @@ TEMP_FILEPATH="000-default.conf"
 create_tmp_file() {
     upstreams="$1"
     cat <<-EOF > $TEMP_FILEPATH
-<VirtualHost *:80>
+<VirtualHost *>
 
     Protocols http/1.1
     DocumentRoot /var/www/html
@@ -34,6 +34,12 @@ EOF
     if [ -n "$upstreams" ]; then
         echo "Upstream configuration"
         cat <<-EOF >> $TEMP_FILEPATH
+
+    SSLProxyEngine On
+    SSLProxyVerify none
+    SSLProxyCheckPeerName off
+    SSLProxyCheckPeerExpire on
+
     ProxyRequests Off
     ProxyPreserveHost On
 
