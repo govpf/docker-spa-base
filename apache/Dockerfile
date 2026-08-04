@@ -1,5 +1,8 @@
 FROM govpf/apache:2.4-bullseye
 
+LABEL govpf.category="framework"
+LABEL govpf.fromimage="govpf/apache:2.4-bullseye"
+
 USER root
 
 RUN apt-get update \
